@@ -54,7 +54,7 @@ def test_search_and_add_product_to_cart():
 
         #proceed to checkout
         driver.find_element(By.XPATH, "//button[@data-test='proceed-1']").click
-        
+
 
 def test_proceed_to_checkout():
         driver = setup()
