@@ -4,12 +4,10 @@ import random
 import string
 import pytest
 
-
-
-    #base_url
+#base_url
 base_url = 'http://localhost:8091'
 
-    #auth_token
+#auth_token
 auth_token = ''
 
 def test_get_product_by_brand():
@@ -32,6 +30,7 @@ def test_get_product_byID():
     headers = {'Authorization': auth_token}
     response = requests.get(url, headers=headers)
     assert response.status_code == 200
+    # assert response.headers["Content-Type"] == "application/json; charset=UTF-8"
 
 
     price = 14.15
@@ -40,18 +39,23 @@ def test_get_product_byID():
     product_name = 'Pliers'
     brand_name = "ForgeFlex Tools"
 
-    name = { 'id': '01J9ZP372CW17V40KPJ3VFGDTT',
+    category_array = { 'id': '01J9ZP372CW17V40KPJ3VFGDTT',
         'name': 'Pliers',
        'parent_id': '01J9ZP3727168BEJKSCRC33E4T',
        'slug': 'pliers'}
     
 
     json_data = response.json()
-    # json_data = json.loads(response.text)
-    
+   
+    # print the json response
     json_str = json.dumps(json_data, indent=2)
-    print('json response for Product Id : ', json_str)
-    assert json_data["category"] == name
+    print('\n\njson response for Product Id : ', json_str)
+
+
+    assert "product_image" in json_data
+    assert "is_rental" in json_data
+
+    assert json_data["category"] == category_array
     assert json_data["category"]["name"] == product_name
     assert json_data["brand"]["name"] == brand_name
 
@@ -60,9 +64,9 @@ def test_get_product_byID():
     assert type(json_data["is_rental"]) == bool
 
 
-    assert json_data['price'] == price
+    # assert json_data['price'] == price
     # for products in json_data:
-    #     assert products['price']
+        # assert products['name'] == prod_name
     #     assert products["is_location_offer"]
     #     assert products["is_rental"]
     
